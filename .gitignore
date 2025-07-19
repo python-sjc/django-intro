@@ -1,0 +1,11 @@
+# Virtualenv
+venv/
+__pycache__/
+*.pyc
+
+# Django stuff:
+db.sqlite3
+*.log
+
+# VSCode settings (se usar VSCode)
+.vscode/
