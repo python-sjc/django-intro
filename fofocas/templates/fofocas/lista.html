@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Fofocas{% endblock %}
+
+{% block content %}
+    {% for f in fofocas %}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>   
+                        <h5 class="card-title mb-1">{{ f.titulo }}</h5>
+                        <span class="badge badge-bairro-{{ f.bairro }}">{{ f.get_bairro_display }}</span>
+                    </div>
+                    <span class="badge bg-secondary">{{ f.get_categoria_display }}</span>
+                </div>
+
+                <p class="card-text">{{ f.descricao }}</p>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="text-muted small">
+                        🧑 Publicado por: <strong>{{ f.autor.username }}</strong><br>
+                        📅 {{ f.criado_em|date:"d/m/Y H:i" }}
+                    </div>
+                    <div>
+                        <a href="{% url 'votar' f.id 'confirmo' %}" class="btn btn-sm btn-outline-primary me-1">
+                            ✅ Confirmo ({{ f.votos_confirmo }})
+                        </a>
+                        <a href="{% url 'votar' f.id 'mentira' %}" class="btn btn-sm btn-outline-danger">
+                            ❌ Mentira ({{ f.votos_mentira }})
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Nenhuma fofoca ainda!</p>
+    {% endfor %}
+{% endblock %}
