@@ -27,6 +27,19 @@
             <div>
                 <h2 class="mb-0">🗣️ Fofocas da Vizinhança</h2>
             </div>
+            <div>
+                {% if user.is_authenticated %}
+                    <span class="me-2">Olá, <strong>{{ user.username }}</strong>!</span>
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Sair</button>
+                    </form>
+                    <a href="{% url 'nova_fofoca' %}" class="btn btn-sm btn-success">Nova Fofoca</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-primary me-2">Entrar</a>
+                    <a href="{% url 'signup' %}" class="btn btn-sm btn-outline-primary me-2">Registrar</a>
+                {% endif %}
+            </div>
         </div>
     </header>
 
