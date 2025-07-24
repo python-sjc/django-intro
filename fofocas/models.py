@@ -33,5 +33,7 @@ class Fofoca(models.Model):
     votos_mentira = models.PositiveIntegerField(default=0)
     criado_em = models.DateTimeField(auto_now_add=True)
 
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self):
         return self.titulo
