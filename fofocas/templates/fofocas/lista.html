@@ -3,35 +3,49 @@
 
 {% block content %}
     {% for f in fofocas %}
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div>   
-                        <h5 class="card-title mb-1">{{ f.titulo }}</h5>
-                        <span class="badge badge-bairro-{{ f.bairro }}">{{ f.get_bairro_display }}</span>
+        <div class="card shadow-sm mb-3">
+            <div class="card-body p-3">
+                <!-- Cabeçalho da fofoca -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-2">
+                    <div class="flex-grow-1 me-md-3">   
+                        <h6 class="card-title mb-2 fw-bold">{{ f.titulo }}</h6>
+                        <div class="d-flex flex-wrap gap-1 mb-2">
+                            <span class="badge badge-bairro-{{ f.bairro }}">{{ f.get_bairro_display }}</span>
+                            <span class="badge bg-secondary">{{ f.get_categoria_display }}</span>
+                        </div>
                     </div>
-                    <span class="badge bg-secondary">{{ f.get_categoria_display }}</span>
                 </div>
 
-                <p class="card-text">{{ f.descricao }}</p>
+                <!-- Descrição -->
+                <p class="card-text mb-3">{{ f.descricao }}</p>
 
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <div class="text-muted small">
-                        🧑 Publicado por: <strong>{{ f.autor.username }}</strong><br>
-                        📅 {{ f.criado_em|date:"d/m/Y H:i" }}
+                <!-- Informações do autor e data -->
+                <div class="text-muted small mb-3">
+                    <div class="d-flex align-items-center mb-1">
+                        <span class="me-2">🧑</span>
+                        <strong>{{ f.autor.username }}</strong>
                     </div>
-                    <div>
-                        <a href="{% url 'votar' f.id 'confirmo' %}" class="btn btn-sm btn-outline-primary me-1">
-                            ✅ Confirmo ({{ f.votos_confirmo }})
-                        </a>
-                        <a href="{% url 'votar' f.id 'mentira' %}" class="btn btn-sm btn-outline-danger">
-                            ❌ Mentira ({{ f.votos_mentira }})
-                        </a>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">📅</span>
+                        {{ f.criado_em|date:"d/m/Y H:i" }}
                     </div>
+                </div>
+
+                <!-- Botões de votação -->
+                <div class="d-flex flex-column flex-sm-row gap-2">
+                    <a href="{% url 'votar' f.id 'confirmo' %}" class="btn btn-sm btn-outline-primary flex-fill">
+                        ✅ Confirmo ({{ f.votos_confirmo }})
+                    </a>
+                    <a href="{% url 'votar' f.id 'mentira' %}" class="btn btn-sm btn-outline-danger flex-fill">
+                        ❌ Mentira ({{ f.votos_mentira }})
+                    </a>
                 </div>
             </div>
         </div>
     {% empty %}
-        <p class="text-muted">Nenhuma fofoca ainda!</p>
+        <div class="text-center py-5">
+            <p class="text-muted mb-0">Nenhuma fofoca ainda!</p>
+            <small class="text-muted">Seja o primeiro a compartilhar uma fofoca! 😄</small>
+        </div>
     {% endfor %}
 {% endblock %}
